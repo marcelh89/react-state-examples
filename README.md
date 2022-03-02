@@ -12,9 +12,9 @@ See a list of all workspaces with ``` yarn workspaces list ```
 
 State Examples are
 - zustand ``` yarn workspace zustand start  ```
-- mobx
-- redux
-- context (react)
-- recoil
-- jotai
+- mobx ``` yarn workspace mobx start  ```
+- redux ``` yarn workspace redux start  ```
+- context (react) ``` yarn workspace context start  ```
+- recoil ``` yarn workspace recoil start  ```
+- jotai ``` yarn workspace jotai start  ```
 
