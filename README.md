@@ -9,4 +9,6 @@ Examples are
 - mobx
 - redux
 - context (react)
+- recoil
+- jotai
 
