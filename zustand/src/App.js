@@ -4,10 +4,10 @@ import {mountStoreDevtool} from 'simple-zustand-devtools';
 
 import './App.css';
 
-// create the zustand's store
-
+// declare constants
 const CAR_URL = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json'
 
+// create the zustand's store
 const useStore = create((set) => ({
 
   filter: "",
