@@ -71,7 +71,7 @@ const App = () => {
     .then(res => res.json())
     .then(cars => carStore.setCars(cars.Results));
 
-  })
+  }, [])
 
   return (
     <Provider carStore={carStore} >

@@ -75,7 +75,7 @@ function App() {
     fetch(CAR_URL)
     .then(res => res.json())
     .then(cars => store.dispatch({ type: types.SETCARS, data: cars.Results }))
-  })
+  }, [])
 
   return (
     <Provider store={store}>

@@ -48,7 +48,7 @@ function App() {
     fetch(CAR_URL)
     .then(res => res.json())
     .then(cars => setCars(cars.Results));
-  })
+  }, [])
 
   return (
     <CarContext.Provider value={{filter, cars, setFilter, setCars}}>

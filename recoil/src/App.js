@@ -1,36 +1,33 @@
 import React, {useEffect} from 'react';
-import create from 'zustand';
-import {mountStoreDevtool} from 'simple-zustand-devtools';
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 import './App.css';
 
 // declare constants
 const CAR_URL = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json'
 
-// create the zustand's store
-const useStore = create((set) => ({
+// create the recoil's state
+const filterState = atom({
+  key: "filter",
+  default: ""
+});
 
-  filter: "",
-  cars: [],
-  setFilter: (filter) => set((state) => ({
-    ...state,
-    filter,
-  })),
-  setCars: (cars) => set((state) => ({cars})) // zustand already spreads the cars object - no need to do it manually
-
-}));
-
-
-// on dev environment use zustand dev tools within React dev tools to see the global state
-if(process.env.NODE_ENV === 'development'){
-  mountStoreDevtool('Store', useStore);
-}
+const carsState = atom({
+  key: "cars",
+  default: []
+});
 
 
 // define React components.
 
 const FilterInput = () => {
-  const [filter, setFilter] = useStore((state) => [state.filter, state.setFilter]);
+  const [filter, setFilter] = useRecoilState(filterState);
  
   return (
     <input value={filter} onChange={(evt) => setFilter(evt.target.value)} />
@@ -38,7 +35,8 @@ const FilterInput = () => {
 }
 
 const CarTable = () => {
-  const [filter,cars] = useStore((state) => [state.filter, state.cars]);
+  const filter = useRecoilValue(filterState);
+  const cars = useRecoilValue(carsState);
 
   return (
     <table width="100%" >
@@ -60,13 +58,12 @@ const CarTable = () => {
 }
 
 function App() {
-  const setCars = useStore((state) => state.setCars);
+  const [_,setCars] = useRecoilState(carsState);
 
   useEffect(() => {
     fetch(CAR_URL)
     .then(res => res.json())
     .then(cars => setCars(cars.Results));
-
   }, [])
 
   return (
@@ -80,4 +77,10 @@ function App() {
   );
 }
 
-export default App;
+const providedApp = () => (
+  <RecoilRoot>
+    <App />
+  </RecoilRoot>
+)
+
+export default providedApp;
